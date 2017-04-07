@@ -1,9 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.x23_team.warningcom.activity.RegisterActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Register"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textColor="#f90000"
+        />
+
+    <EditText
+        android:id="@+id/edtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:hint="User name"
+        android:typeface="serif"/>
+
+
+    <EditText
+        android:id="@+id/edtPassWord"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Password"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:typeface="serif"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/edtConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:hint="Confirm-Password"
+        android:typeface="serif"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/edtFullName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:hint="Full name"
+        android:typeface="serif"/>
+
+    <EditText
+        android:id="@+id/edtPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:hint="Phone number"
+        android:typeface="serif"/>
+
+    <EditText
+        android:id="@+id/edtEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="10dp"
+        android:textSize="18dp"
+        android:hint="Email address"
+        android:typeface="serif"
+        />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/rounded_button"
+        android:textAllCaps="false"
+        android:text="SIGN UP"
+        android:textSize="17dp"
+        android:textColor="#ffffff"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"/>
+</LinearLayout>
