@@ -29,6 +29,11 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("Error", "Table is exits")
         }
     }
+
+    private void createTable() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
