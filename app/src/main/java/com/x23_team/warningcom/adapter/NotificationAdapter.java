@@ -26,6 +26,7 @@ public class NotificationAdapter extends ArrayAdapter<Post> {
     Activity context = null;
     ArrayList<Post> myArray = null;
     int LayoutId;
+    String output="";
 
     public NotificationAdapter(@NonNull Activity context, @LayoutRes int resource, @NonNull ArrayList<Post> objects) {
         super(context, resource, objects);
@@ -42,20 +43,24 @@ public class NotificationAdapter extends ArrayAdapter<Post> {
         convertView = inflater.inflate(LayoutId,null);
         final Post myPost = myArray.get(position);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.iconNotificationListview);
+
         switch (myPost.getTypeOfWarning()){
-            case 1: imageView.setImageResource(R.drawable.giaothong);
+            case 1: {imageView.setImageResource(R.drawable.giaothong);
+                output+="Traffic";}
                 break;
-            case 2: imageView.setImageResource(R.drawable.giaothong);
+            case 2: {imageView.setImageResource(R.drawable.wheather);
+                output+="Wheather";}
                 break;
-            case 3: imageView.setImageResource(R.drawable.giaothong);
+            case 3: {imageView.setImageResource(R.drawable.helpme);
+                output+="Help me";}
                 break;
         }
-
+        output = "";
         final TextView txtType = (TextView) convertView.findViewById(R.id.txtTypeAndNumberOfPost);
         if(myPost.getNumberOfPost()==1)
-            txtType.setText(myPost.getTypeOfWarning()+" (1 person alerts)");
+            txtType.setText(output+" (1 person alerts)");
         else
-            txtType.setText(myPost.getTypeOfWarning()+" ("+myPost.getNumberOfPost()+" people alert)");
+            txtType.setText(output+" ("+myPost.getNumberOfPost()+" people alert)");
 
         final TextView txtAddress = (TextView) convertView.findViewById(R.id.txtAddress);
         txtAddress.setText(myPost.getAddress());
