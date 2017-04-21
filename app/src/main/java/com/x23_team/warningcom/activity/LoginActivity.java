@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                         db.addAccount(pass, name, email, role, phonenumber);
 
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -169,13 +169,17 @@ public class LoginActivity extends AppCompatActivity {
                 ID = edtID.getText().toString().trim();
                 pass = edtPass.getText().toString();
                 // Check for empty data in the form
-                if (!ID.isEmpty() && !pass.isEmpty()) {
+                //if (!ID.isEmpty() && !pass.isEmpty()) {
+                if (ID.equals(pass)){
                     // login user
-                    checkLogin(ID, pass);
+                    //checkLogin(ID, pass);
+                    Toast.makeText(getApplicationContext(),
+                            "Login Success", Toast.LENGTH_LONG).show();
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
                             "Please enter the credentials!", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
