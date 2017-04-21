@@ -29,8 +29,9 @@ public class NotificationStatisticsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.statisticsToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle("Notification");
+
 
         listNotification = (ListView) findViewById(R.id.listNotification);
         ArrayList<Post> arrPost = new ArrayList<>();
@@ -56,7 +57,11 @@ public class NotificationStatisticsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                Toast.makeText(NotificationStatisticsActivity.this,"Chuyen ve home activity",Toast.LENGTH_LONG).show();
+                //Toast.makeText(NotificationStatisticsActivity.this,"Chuyen ve home activity",Toast.LENGTH_LONG).show();
+            {
+                Intent intent = new Intent(NotificationStatisticsActivity.this,RegisterActivity.class);
+                startActivity(intent);
+            }
 
         }
         return super.onOptionsItemSelected(item);
