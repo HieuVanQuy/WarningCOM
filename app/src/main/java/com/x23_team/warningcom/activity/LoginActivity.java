@@ -173,8 +173,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (ID.equals(pass)){
                     // login user
                     //checkLogin(ID, pass);
-                    Toast.makeText(getApplicationContext(),
-                            "Login Success", Toast.LENGTH_LONG).show();
+                    Intent register = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(register);
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),

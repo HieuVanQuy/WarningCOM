@@ -25,12 +25,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private ProgressDialog progressDialog;
     private FloatingActionButton fabAdd, fabLocation;
+    private FragmentDrawer.FragmentDrawerListener drawerListener;
     public static final int REQUEST_ID_ACCESS_COURSE_FINE_LOCATION = 100;
     private static final String TAG = HomeFragment.class.getSimpleName();
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     public HomeFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         fabLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //currentMyLocation();
+//                currentMyLocation();
             }
         });
         // Inflate the layout for this fragment
