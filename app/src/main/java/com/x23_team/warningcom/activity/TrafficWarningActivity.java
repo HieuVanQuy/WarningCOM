@@ -2,6 +2,7 @@ package com.x23_team.warningcom.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,9 +13,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +28,15 @@ import android.widget.Toast;
 
 import com.x23_team.warningcom.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 public class TrafficWarningActivity extends AppCompatActivity {
+
+    Bitmap bitmap;
 
     private static final long MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 1;
     private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000;
@@ -65,6 +72,8 @@ public class TrafficWarningActivity extends AppCompatActivity {
 
         geocoder = new Geocoder(this, Locale.getDefault());
 
+
+
         edtLocation = (EditText) findViewById(R.id.edtLocation);
         imgView = (ImageView) findViewById(R.id.imgView);
         btnAddImage = (ImageButton) findViewById(R.id.btnAddImage);
@@ -79,7 +88,7 @@ public class TrafficWarningActivity extends AppCompatActivity {
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                capturePicture();
+                viewImage();
             }
         });
 
@@ -101,7 +110,7 @@ public class TrafficWarningActivity extends AppCompatActivity {
                 StringBuilder strReturnedAddress = new StringBuilder("");
 
                 for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append(", ");
                 }
                 strAdd = strReturnedAddress.toString();
                 Log.w("My Current loction address", "" + strReturnedAddress.toString());
@@ -110,7 +119,7 @@ public class TrafficWarningActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.w("My Current loction address", "Canont get Address!");
+            Log.w("My Current loction address", "Cannot get Address!");
         }
         return strAdd;
     }
@@ -130,13 +139,16 @@ public class TrafficWarningActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            bitmap = (Bitmap) data.getExtras().get("data");
             imgView.setImageBitmap(bitmap);
+
             layout.setVisibility(View.INVISIBLE);
             imgView.setVisibility(View.VISIBLE);
+
+
         } else if (requestCode == RESULT_CANCELED)
-            capturePicture();
-        else capturePicture();
+            recreate();
+        else recreate();
 
     }
 
@@ -165,5 +177,13 @@ public class TrafficWarningActivity extends AppCompatActivity {
 
     }
 
+    private void viewImage(){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
 
+        Intent intent = new Intent(this,ViewImageActivity.class);
+        intent.putExtra("image",byteArray);
+        startActivity(intent);
+    }
 }
