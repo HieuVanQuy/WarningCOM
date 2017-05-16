@@ -11,21 +11,6 @@
     <string name="login">LOG IN</string>
     <string name="action_logout">Logout</string>
 
-    <string name="nav_item_home">Home</string>
-    <string name="nav_item_my_place">My Place</string>
-    <string name="nav_item_places">Place</string>
-
-    <!-- navigation drawer item labels  -->
-    <string-array name="nav_drawer_labels">
-        <item>@string/nav_item_home</item>
-        <item>@string/nav_item_my_place</item>
-        <item>@string/nav_item_places</item>>
-    </string-array>
-
-    <string name="title_places">Place</string>
-    <string name="title_my_place">My Place</string>
-    <string name="title_home">Home</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">Map</string>

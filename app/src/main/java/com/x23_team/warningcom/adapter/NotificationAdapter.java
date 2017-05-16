@@ -1,7 +1,6 @@
 package com.x23_team.warningcom.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import com.x23_team.warningcom.Entity.Post;
 import com.x23_team.warningcom.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by danam on 07/04/2017.
@@ -43,24 +41,18 @@ public class NotificationAdapter extends ArrayAdapter<Post> {
         convertView = inflater.inflate(LayoutId,null);
         final Post myPost = myArray.get(position);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.iconNotificationListview);
-
-        switch (myPost.getTypeOfWarning()){
-            case 1: {imageView.setImageResource(R.drawable.giaothong);
+        switch (myPost.getType_id()){
+            case "1": {imageView.setImageResource(R.drawable.giaothong);
                 output+="Traffic";}
                 break;
-            case 2: {imageView.setImageResource(R.drawable.wheather);
+            case "2": {imageView.setImageResource(R.drawable.wheather);
                 output+="Wheather";}
                 break;
-            case 3: {imageView.setImageResource(R.drawable.helpme);
+            case "3": {imageView.setImageResource(R.drawable.helpme);
                 output+="Help me";}
                 break;
         }
         output = "";
-        final TextView txtType = (TextView) convertView.findViewById(R.id.txtTypeAndNumberOfPost);
-        if(myPost.getNumberOfPost()==1)
-            txtType.setText(output+" (1 person alerts)");
-        else
-            txtType.setText(output+" ("+myPost.getNumberOfPost()+" people alert)");
 
         final TextView txtAddress = (TextView) convertView.findViewById(R.id.txtAddress);
         txtAddress.setText(myPost.getAddress());

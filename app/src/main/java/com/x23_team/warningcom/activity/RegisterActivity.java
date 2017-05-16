@@ -1,9 +1,11 @@
 package com.x23_team.warningcom.activity;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.x23_team.warningcom.app.AppConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -31,12 +35,23 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private EditText edtUsername, edtPassWord, edtConfirmPassword, edtFullName, edtPhoneNumber, edtEmailAddress;
     private Button btnSignUp;
+    private SQLiteDatabase database;
+    public static String DATABASE_NAME = "arirang.sqlite";
+
     private String Username,Password,ConfirmPassword,FullName,PhoneNumber,Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        database = openOrCreateDatabase( "WarningCOM", MODE_PRIVATE, null );
+        try {
+            InputStream myInput;
+            myInput = getAssets().open( DATABASE_NAME );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
         setSupportActionBar(toolbar);
@@ -51,10 +66,36 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submit();
+                insert();
             }
         });
     }
 
+    private void insert(){
+        String Password = edtPassWord.getText().toString();
+        String fullname = edtFullName.getText().toString();
+        String phonenumber = edtPhoneNumber.getText().toString();
+        String Email = edtEmailAddress.getText().toString();
+        ContentValues values = new ContentValues();
+        values.put( "Email", Email );
+        values.put( "Name", fullname );
+        values.put( "Password", Password );
+        values.put( "Phonenumber", phonenumber );
+        values.put( "role", 1 );
+        String msg = "";
+        if (database.insert( "Account", null, values )==-1){
+            msg = "Fail to create Account";
+        }else {
+            msg = "Create Account is success";
+            Intent intent = new Intent( RegisterActivity.this, FragmentMenu.class );
+            startActivity( intent );
+            finish();
+        }
+        Toast.makeText( this, msg, Toast.LENGTH_LONG ).show();
+
+
+
+    }
     private void submit() {
         if(!validateUserName())
             return;

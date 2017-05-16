@@ -1,13 +1,12 @@
 package com.x23_team.warningcom.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.x23_team.warningcom.Entity.Post;
 import com.x23_team.warningcom.R;
@@ -16,8 +15,7 @@ import com.x23_team.warningcom.adapter.NotificationAdapter;
 import java.util.ArrayList;
 
 public class NotificationStatisticsActivity extends AppCompatActivity {
-    private int[] typeOfWarning = {1,2,3};
-    private int[] numberOfPost = {10,5,1};
+    private String[] typeOfWarning = {"1","2","3"};
     private String[] address = {"Phan Tu, Ngu Hanh Son, Da Nang","Nguyen Van Linh, Thanh Khe, Da Nang","Hoang Sa, Ngu Hanh Son, Da Nang"};
     private ListView listNotification;
     private NotificationAdapter adapterNotification;
@@ -37,10 +35,9 @@ public class NotificationStatisticsActivity extends AppCompatActivity {
         ArrayList<Post> arrPost = new ArrayList<>();
         adapterNotification = new NotificationAdapter(NotificationStatisticsActivity.this,R.layout.notificationlistview_layout,arrPost);
         listNotification.setAdapter(adapterNotification);
-        for(int i = 0;i<typeOfWarning.length;i++){
+        for(int i = 1;i<=3;i++){
             Post mypost = new Post();
-            mypost.setTypeOfWarning(typeOfWarning[i]);
-            mypost.setNumberOfPost(numberOfPost[i]);
+            mypost.setType_id(typeOfWarning[i]);
             mypost.setAddress(address[i]);
             arrPost.add(mypost);
             adapterNotification.notifyDataSetChanged();

@@ -111,7 +111,7 @@
         android:layout_height="42dp"
         android:layout_gravity="center"
         android:layout_marginTop="45dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_button3"
         android:textAllCaps="false"
         android:text="SIGN UP"
         android:textSize="17dp"
