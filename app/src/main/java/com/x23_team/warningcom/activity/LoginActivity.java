@@ -120,8 +120,14 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     jObj = new JSONObject(response.substring( 0 ));
                     String id = jObj.getString( "id" );
+                    String ttl = jObj.getString( "ttl" );
+                    String creted = jObj.getString( "created" );
+                    String userId = jObj.getString( "userId" );
 
                     AppConfig.API_KEY = id;
+                    AppConfig.KEY_UserID = userId;
+                    AppConfig.KEY_TTL = ttl;
+                    AppConfig.KEY_CREATED = creted;
                     session.setLogin( true );
                     Intent intent = new Intent( LoginActivity.this, FragmentMenu.class );
                     startActivity( intent );

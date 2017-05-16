@@ -30,6 +30,7 @@ public class SessionManager {
     private static String Key_API = "KEY";
     private static String Key_PASS = "PASS";
     private static String Key_EMAIL = "EMAIL";
+    private static String Key_UserId = "UserId";
 
     public SessionManager(Context context) {
         this._context = context;
@@ -40,12 +41,12 @@ public class SessionManager {
     public String getPASS() {
         return pref.getString(Key_PASS,"");
     }
-
+    public String getUserId(){ return pref.getString( Key_UserId,"" );}
 
     public void setLogin(boolean isLoggedIn) {
 
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
-        editor.putString(Key_PASS, AppConfig.KEY_PASS);
+        editor.putString(Key_UserId, AppConfig.KEY_UserID);
         editor.putString(Key_EMAIL, AppConfig.KEY_EMAIL);
 
 
