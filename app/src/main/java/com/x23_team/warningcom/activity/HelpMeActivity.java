@@ -1,8 +1,10 @@
 package com.x23_team.warningcom.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 
 import com.x23_team.warningcom.R;
 
@@ -21,4 +23,5 @@ public class HelpMeActivity extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+
 }

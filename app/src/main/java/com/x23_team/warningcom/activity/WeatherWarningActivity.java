@@ -1,11 +1,16 @@
 package com.x23_team.warningcom.activity;
 
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
