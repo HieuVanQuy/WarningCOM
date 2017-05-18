@@ -5,29 +5,34 @@ package com.x23_team.warningcom.Entity;
  */
 
 public class Post {
-    private String IDPost, content, nameOfUser, address;
-    private int accept, image, typeOfWarning,numberOfPost,time,position;
-    public Post(){}
-
-    public Post(String IDPost, String content, String nameOfUser, String address, int accept, int image, int typeOfWarning, int numberOfPost, int time, int position) {
-        this.IDPost = IDPost;
+    private String content, image, type_id, lat, lng, address, account_id, id;
+    public Post(){
+    }
+    public Post( String content, String image, String type_id, String lat, String lng, String address,
+                 String account_id, String id){
         this.content = content;
-        this.nameOfUser = nameOfUser;
-        this.address = address;
-        this.accept = accept;
         this.image = image;
-        this.typeOfWarning = typeOfWarning;
-        this.numberOfPost = numberOfPost;
-        this.time = time;
-        this.position = position;
+        this.type_id = type_id;
+        this.lat = lat;
+        this.lng = lng;
+        this.address = address;
+        this.account_id = account_id;
+        this.id = id;
+    }
+    public String getLat() {
+        return lat;
     }
 
-    public String getIDPost() {
-        return IDPost;
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 
-    public void setIDPost(String IDPost) {
-        this.IDPost = IDPost;
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 
     public String getContent() {
@@ -38,60 +43,20 @@ public class Post {
         this.content = content;
     }
 
-    public String getNameOfUser() {
-        return nameOfUser;
-    }
-
-    public void setNameOfUser(String nameOfUser) {
-        this.nameOfUser = nameOfUser;
-    }
-
-    public int getAccept() {
-        return accept;
-    }
-
-    public void setAccept(int accept) {
-        this.accept = accept;
-    }
-
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public int getTypeOfWarning() {
-        return typeOfWarning;
+    public String getType_id() {
+        return type_id;
     }
 
-    public void setTypeOfWarning(int typeOfWarning) {
-        this.typeOfWarning = typeOfWarning;
-    }
-
-    public int getNumberOfPost() {
-        return numberOfPost;
-    }
-
-    public void setNumberOfPost(int numberOfPost) {
-        this.numberOfPost = numberOfPost;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
     }
 
     public String getAddress() {
@@ -100,5 +65,21 @@ public class Post {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAccount_id() {
+        return account_id;
+    }
+
+    public void setAccount_id(String account_id) {
+        this.account_id = account_id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
