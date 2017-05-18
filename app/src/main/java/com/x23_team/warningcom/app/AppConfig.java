@@ -5,5 +5,6 @@ package com.x23_team.warningcom.app;
  */
 
 public class AppConfig {
-    public static String URL_REGISTER = "";
+    public static String URL_REGISTER = "https://warningcom.herokuapp.com/api/accounts";
+    public static String URL_POST = "https://warningcom.herokuapp.com/api/posts";
 }
