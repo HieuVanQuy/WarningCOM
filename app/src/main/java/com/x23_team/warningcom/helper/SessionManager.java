@@ -31,6 +31,7 @@ public class SessionManager {
     private static String Key_PASS = "PASS";
     private static String Key_EMAIL = "EMAIL";
     private static String Key_UserId = "UserId";
+    private static String Key_Created = "Created";
 
     public SessionManager(Context context) {
         this._context = context;
@@ -42,6 +43,7 @@ public class SessionManager {
         return pref.getString(Key_PASS,"");
     }
     public String getUserId(){ return pref.getString( Key_UserId,"" );}
+    public String getCreated(){ return pref.getString( Key_Created,"" );}
 
     public void setLogin(boolean isLoggedIn) {
 
