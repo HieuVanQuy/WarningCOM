@@ -1,9 +1,11 @@
 package com.x23_team.warningcom.activity;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +19,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.x23_team.warningcom.R;
 import com.x23_team.warningcom.app.AppConfig;
-import com.x23_team.warningcom.app.AppController;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -30,19 +33,29 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private ProgressDialog pDialog;
-    private EditText edtPassWord, edtConfirmPassword, edtFullName, edtPhoneNumber, edtEmailAddress;
+    private EditText edtUsername, edtPassWord, edtConfirmPassword, edtFullName, edtPhoneNumber, edtEmailAddress;
     private Button btnSignUp;
-    private String Password,ConfirmPassword,FullName,PhoneNumber,Email;
+    private SQLiteDatabase database;
+    public static String DATABASE_NAME = "arirang.sqlite";
 
-    //private SessionManager session;
+    private String Username,Password,ConfirmPassword,FullName,PhoneNumber,Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        database = openOrCreateDatabase( "WarningCOM", MODE_PRIVATE, null );
+        try {
+            InputStream myInput;
+            myInput = getAssets().open( DATABASE_NAME );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.registerToolbar);
         setSupportActionBar(toolbar);
+        edtUsername = (EditText) findViewById(R.id.edtUserName);
         edtPassWord = (EditText) findViewById(R.id.edtPassWord);
         edtConfirmPassword = (EditText) findViewById(R.id.edtConfirmPassword);
         edtFullName = (EditText) findViewById(R.id.edtFullName);
@@ -53,18 +66,39 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submit();
+                insert();
             }
         });
-
-        // Progress dialog
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-
-        // Session manager
-        //session = new SessionManager(getBaseContext())
     }
 
+    private void insert(){
+        String Password = edtPassWord.getText().toString();
+        String fullname = edtFullName.getText().toString();
+        String phonenumber = edtPhoneNumber.getText().toString();
+        String Email = edtEmailAddress.getText().toString();
+        ContentValues values = new ContentValues();
+        values.put( "Email", Email );
+        values.put( "Name", fullname );
+        values.put( "Password", Password );
+        values.put( "Phonenumber", phonenumber );
+        values.put( "role", 1 );
+        String msg = "";
+        if (database.insert( "Account", null, values )==-1){
+            msg = "Fail to create Account";
+        }else {
+            msg = "Create Account is success";
+            Intent intent = new Intent( RegisterActivity.this, FragmentMenu.class );
+            startActivity( intent );
+            finish();
+        }
+        Toast.makeText( this, msg, Toast.LENGTH_LONG ).show();
+
+
+
+    }
     private void submit() {
+        if(!validateUserName())
+            return;
         if(!validatePassWord())
             return;
         if(!validateConfirmPassWord())
@@ -75,11 +109,24 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         if(!validateEmailAddress())
             return;
-        onSignUp();
+        //onSignUp();
     }
 
 
 
+    private boolean validateUserName(){
+        Username = edtUsername.getText().toString().trim();
+        if(Username.isEmpty()){
+            edtUsername.setError(edtUsername.getHint()+" is required!");
+            edtUsername.requestFocus();
+            return false;
+        }
+        else {
+            edtUsername.setError(null);
+            return true;
+        }
+
+    }
 
     private boolean validatePassWord(){
         Password = edtPassWord.getText().toString().trim();
@@ -167,54 +214,71 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
     private void onSignUp() {
-        //String tag_string_req = "req_register";
+        String tag_string_req = "req_register";
 
         pDialog.setMessage("Registering...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.URL_REGISTER, new Response.Listener<String>()
-        {
+        StringRequest strReq = new StringRequest(Request.Method.POST, AppConfig.URL_REGISTER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Response",response);
+                Log.d(TAG, "Register Response: " + response.toString());
                 hideDialog();
-                try{
-                    JSONObject jObj = new JSONObject(response);
+                try {
+                    JSONObject jObj = new JSONObject(response.substring(3));
                     boolean error = jObj.getBoolean("error");
 
-                    if(!error){
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        String api_key = jObj.getString("api_key");
+                        String name = jObj.getString("name");
+                        String email = jObj.getString("email");
+                        String created_at = jObj.getString("created_at");
+
+
+                        // Inserting row in users table
+                        // db.addUser(name, email, api_key, created_at);
+                        // AppConfig.API_KEY = api_key;
+                        // session.setLogin(true);
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+
+                        // Launch login activity
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("message");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
                     }
-
-                    else{
-                        Toast.makeText(getApplicationContext(), jObj.getString("message"), Toast.LENGTH_LONG).show();
-                    }
-
-
                 } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error.Response",error.getMessage());
-                Toast.makeText(getApplicationContext(),"Error response",Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
             }
         }){
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", Email);
-                params.put("name", FullName);
-                params.put("phone_number", PhoneNumber);
+                params.put("FullName", FullName);
+                params.put("EmailAddress", Email);
                 params.put("password", Password);
-                params.put("role_name", "user" );
                 return params;
             }
         };
-        AppController.getInstance(this).getRequestQueue().add(strReq);
     }
 }
